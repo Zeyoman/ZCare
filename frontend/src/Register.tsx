@@ -4,6 +4,8 @@ interface FormData {
   firstName: string
   lastName: string
   mail: string
+  age: string
+  sex: string
   pseudo: string
   password: string
 }
@@ -13,12 +15,16 @@ const Register = () => {
     firstName: '',
     lastName: '',
     mail: '',
+    age: '',
+    sex: '',
     pseudo: '',
     password: '',
   })
   const [message, setMessage] = useState('')
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
@@ -35,7 +41,7 @@ const Register = () => {
 
       if (response.ok) {
         setMessage('User registered successfully')
-        setForm({ firstName: '', lastName: '', mail: '', pseudo: '', password: '' })
+        setForm({ firstName: '', lastName: '', mail: '', pseudo: '', password: '', age: '', sex: '' })
       } else {
         const data = await response.json()
         setMessage(data.message || 'Registration failed')
@@ -72,6 +78,26 @@ const Register = () => {
           placeholder="Email"
           required
         />
+        <input
+          name="age"
+          type="number"
+          value={form.age}
+          onChange={handleChange}
+          placeholder="Age"
+          required
+        />
+        <select
+          name="sex"
+          value={form.sex}
+          onChange={handleChange}
+          required>
+          <option value="" disabled>
+            Sex
+          </option>
+          <option value="HOMME">Homme</option>
+          <option value="FEMME">Femme</option>
+          <option value="AUTRE">Autre</option>
+        </select>
         <input
           name="pseudo"
           value={form.pseudo}
