@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const authRoutes = require('./routes/auth');
+const routes  = require('./routes');
 
 const app = express();
 
@@ -14,6 +14,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type','Authorization']
 }));
 
-app.use('/', authRoutes);
+app.use('/', routes);
 
 module.exports = app;

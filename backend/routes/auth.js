@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const { User } = require('../models');
 
 const router = express.Router();
@@ -79,7 +80,6 @@ router.post('/login', async (req, res) => {
     const token = crypto.randomBytes(32).toString('hex');
     user.token = token;
     await user.save();
-
     res.json({ token, id: user._id, mail: user.mail, pseudo: user.pseudo, roles: user.roles, subscription: user.subscription });
   } catch (error) {
     console.error('Error logging in user:', error);
