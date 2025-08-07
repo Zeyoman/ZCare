@@ -1,4 +1,4 @@
-// routes/index.js
+// ZCare/backend/routes/index.js
 const express    = require('express');
 const authRoutes = require('./auth');
 const usersRoutes = require('./users');

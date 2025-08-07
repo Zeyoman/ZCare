@@ -1,3 +1,4 @@
+// ZCare/backend/routes/auth.js
 const express = require('express');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
