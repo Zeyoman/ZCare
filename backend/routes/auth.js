@@ -81,9 +81,34 @@ router.post('/login', async (req, res) => {
     const token = crypto.randomBytes(32).toString('hex');
     user.token = token;
     await user.save();
-    res.json({ token, id: user._id, mail: user.mail, pseudo: user.pseudo, roles: user.roles, subscription: user.subscription });
+
+    const { password: _password, __v, ...userData } = user.toObject();
+    res.json(userData);
   } catch (error) {
     console.error('Error logging in user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.post('/logout', async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ message: 'Token required' });
+    }
+
+    const user = await User.findOne({ token });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.token = null;
+    await user.save();
+    res.json({ message: 'Logged out' });
+  } catch (error) {
+    console.error('Error logging out user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

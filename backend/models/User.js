@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   mail:                 { type: String, required: true, unique: true },
   pseudo:               { type: String, required: true, unique: true },
   age:                  { type: Number, required: true },
-  phone:                { type: Number, required: true },
+  phone:                { type: Number },
   sex:                  { type: String, required: true, enum: ['HOMME', 'FEMME', 'AUTRE'] },
   roles:                { type: String, default: 'ROLE_USER', enum: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR'] },
   subscription:         { type: String, default: 'SUB_FREE', enum: ['SUB_FREE', 'SUB_PREMIUM'] },

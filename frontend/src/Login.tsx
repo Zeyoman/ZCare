@@ -1,11 +1,16 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
+import { User } from './types'
+
+interface LoginProps {
+  onLogin: (user: User) => void
+}
 
 interface LoginData {
   identifier: string
   password: string
 }
 
-const Login = () => {
+const Login = ({ onLogin }: LoginProps) => {
   const [form, setForm] = useState<LoginData>({ identifier: '', password: '' })
   const [message, setMessage] = useState('')
 
@@ -30,6 +35,8 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json()
+        localStorage.setItem('token', data.token)
+        onLogin(data)
         setMessage(`Logged in as ${data.pseudo || data.mail}`)
         setForm({ identifier: '', password: '' })
       } else {
